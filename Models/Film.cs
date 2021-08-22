@@ -20,8 +20,7 @@ namespace Bioskop.Models{
         [Required(ErrorMessage="Neophodno je uneti zanr filma!")]
         [Column("Zanr")]
         public string Zanr{get;set;}
-
-        [StringLength(60)] 
+        
         [Column("VremeTrajanja")]
         public int vremeTrajanja{get;set;}
 

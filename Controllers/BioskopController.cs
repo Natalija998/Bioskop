@@ -166,11 +166,12 @@ namespace Bioskop.Controllers
             await Context.SaveChangesAsync();
         }
         [HttpPut]
-        [Route("IzmeniFilmSalaTermin/{idFilmSala}/{termin}")]
-        public async Task IzmeniTermin(int idFilmSala,DateTime termin)
+        [Route("IzmeniFilmSalaTermin/{idFilmSala}/{termin}/{filmID}")]
+        public async Task IzmeniTermin(int idFilmSala,DateTime termin,int filmID)
         {
             var t=await Context.FilmSala.FindAsync(idFilmSala);
             t.Termin=termin;
+            t.FilmID=filmID;
             Context.FilmSala.Update(t);
 
             await Context.SaveChangesAsync();
