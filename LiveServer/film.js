@@ -8,10 +8,13 @@ export class Film
         this.zanr=zanr;
         this.vremeTrajanja=vreme;
         this.glumci=glumci;
+
+        this.FilmSalaNiz=new Array();
     }
 
     crtaj(tbody,termin)
     {
+        this.FilmSalaNiz.push(termin);
         var filmTr=document.createElement("tr");
         filmTr.className="filmTr";
         tbody.appendChild(filmTr);

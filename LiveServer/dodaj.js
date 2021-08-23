@@ -112,28 +112,38 @@ export class Dodaj
             var naziv=this.kontejner.querySelector(".nazivBioskopa").value;
             var adresa=this.kontejner.querySelector(".adresaBioskopa").value;
 
-            fetch("https://localhost:5001/Bioskop/DodajBioskop", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "naziv":naziv,
-                    "adresa":adresa
-                })
-            }).then(p => {
-                if(p.ok)
-                {
-                    alert("Uspesno ste dodali bioskop!");
-                    document.location.reload();
-                }
-                else
-                {
-                    alert("Nastala je greska prilikom dodavanja bioskopa!");
-                    document.location.reload();
+            if (naziv=="") 
+            {
+                alert("Neophodno je uneti naziv bioskopa!");
+            } else if(adresa=="") 
+            {
+                alert("Neophodno je uneti adresu bioksopa!");
+            }
+            else 
+            {
+                fetch("https://localhost:5001/Bioskop/DodajBioskop", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "naziv":naziv,
+                        "adresa":adresa
+                    })
+                }).then(p => {
+                    if(p.ok)
+                    {
+                        alert("Uspesno ste dodali bioskop!");
+                        document.location.reload();
+                    }
+                    else
+                    {
+                    //  alert("Nastala je greska prilikom dodavanja bioskopa!");
+                        document.location.reload();
 
-                }
-            });
+                    }
+                });
+             }
         }
 
     }
@@ -216,28 +226,39 @@ export class Dodaj
             var brSedista=divSala.querySelector(".brSedista").value;
             var b=divSala.querySelector('select[name="s"]').value;
 
-            fetch("https://localhost:5001/Bioskop/DodajSalu/"+b,{
-                method:"POST",
-                    headers:{
-                        "Content-Type": "application/json"
-                    },
-                    body:JSON.stringify({
-                    "oznaka":nazivSale,
-                    "brojsedista":brSedista,
-                   })      
-            }).then(p=>{
-                if(p.ok)
-                {
-                    alert("Uspesno ste dodali salu!");
-                    document.location.reload();
-                }
-                else
-                {
-                    alert("Nastala je greska prilikom dodavanja sale!");
-                    document.location.reload();
-                }
-            })
-            
+            if(nazivSale=="")
+            {
+                alert("Neophodno je uneti naziv sale!");
+            } else if(brSedista=="")
+            {
+                alert("Neophodno je uneti broj sedista sale!");
+            }
+            else
+            {
+                fetch("https://localhost:5001/Bioskop/DodajSalu/"+b,{
+                    method:"POST",
+                        headers:{
+                            "Content-Type": "application/json"
+                        },
+                        body:JSON.stringify({
+                        "oznaka":nazivSale,
+                        "brojsedista":brSedista,
+                       })      
+                }).then(p=>{
+                    if(p.ok)
+                    {
+                        alert("Uspesno ste dodali salu!");
+                        document.location.reload();
+                    }
+                    else
+                    {
+                      //  alert("Nastala je greska prilikom dodavanja sale!");
+                        document.location.reload();
+                    }
+                });
+                
+            }
+          
         }
          
             
@@ -324,30 +345,48 @@ export class Dodaj
             var trajanje=divFilm.querySelector(".trajanjeFilma").value;
             var glumci=divFilm.querySelector(".glumci").value;
 
-            fetch("https://localhost:5001/Bioskop/DodajFilm",{
-                method:"POST",
-                    headers:{
-                        "Content-Type": "application/json"
-                    },
-                    body:JSON.stringify({
-                    "naziv":nazivFilma,
-                    "zanr":zanr,
-                    "vremetrajanja":trajanje,
-                    "glumci":glumci
-                   })      
-            }).then(p=>{
-                if(p.ok)
-                {
-                    alert("Uspesno ste dodali film!");
-                    document.location.reload();
-                }
-                else
-                {
-                    alert("Nastala je greska prilikom dodavanja filma!");
-                    document.location.reload();
-                }
-            })
-            
+            if(nazivFilma=="")
+            {
+                alert("Neophodno je uneti naziv filma!");
+            }
+            else if(zanr=="")
+            {
+                alert("Neophodno je uneti zanr filma!");
+            }else if(trajanje=="")
+            {
+                alert("Neophodno je uneti trajanje filma!");
+            }else if(glumci=="")
+            {
+                alert("Neophodno je uneti glumce filma!");
+            }
+            else{
+                fetch("https://localhost:5001/Bioskop/DodajFilm",{
+                    method:"POST",
+                        headers:{
+                            "Content-Type": "application/json"
+                        },
+                        body:JSON.stringify({
+                        "naziv":nazivFilma,
+                        "zanr":zanr,
+                        "vremetrajanja":trajanje,
+                        "glumci":glumci
+                       })      
+                }).then(p=>{
+                    if(p.ok)
+                    {
+                        alert("Uspesno ste dodali film!");
+                        document.location.reload();
+                    }
+                    else
+                    {
+                        // alert("Nastala je greska prilikom dodavanja filma!");
+                        document.location.reload();
+                    }
+                });
+                
+            }
+
+       
         }
      }
     crtajDodavanjeFilmaSala(divFilmSala)
@@ -505,7 +544,7 @@ export class Dodaj
                 let vreme=[];
 
                 let dataTime=[];
-                
+              
                 saleID.forEach(el=>{
                     datumInput.push(document.querySelector('input[name="datum'+el+'"]'));
                     vremeInput.push(document.querySelector('input[name="vreme'+el+'"]'));
@@ -515,32 +554,46 @@ export class Dodaj
                 vremeInput.forEach(v=>vreme.push(v.value));
                 console.log(datum);
                 console.log(vreme);
-
-                for(let i=0;i<datum.length;i++)
+                
+                if (saleID.length==0)
                 {
-                    dataTime[i]=datum[i]+" "+vreme[i];
-                    console.log(dataTime[i]);
-                    fetch("https://localhost:5001/Bioskop/DodajFilmUSalu/"+filmID+"/"+saleID[i]+"/"+dataTime[i],{
-                        method:"POST",
-                            headers:{
-                                "Content-Type": "application/json"
-                            }  
-                    }).then(p=>{
-                        if(p.ok)
-                        {
-                            alert("Uspesno ste dodali sali film!");
-                            dugmeB.disabled=false;
-                            document.location.reload();
-                        }
-                        else
-                        {
-                            
-                            alert("Nastala je greska prilikom dodavanja filma sali!");
-                            dugmeB.disabled=false;
-                            document.location.reload();
-                        }
-                    })
+                    alert("Neophodno je cekirati salu za koju zelite da dodate termin!");
                 }
+                else {
+
+                    for(let i=0;i<datum.length;i++)
+                    {
+                        if(datum[i]==""||vreme[i]=="")
+                        {
+                            alert("Neophodno je uneti datum i vreme za datu salu!");
+                        }
+                        else{
+                            dataTime[i]=datum[i]+" "+vreme[i];
+                            fetch("https://localhost:5001/Bioskop/DodajFilmUSalu/"+filmID+"/"+saleID[i]+"/"+dataTime[i],{
+                                method:"POST",
+                                    headers:{
+                                        "Content-Type": "application/json"
+                                    }  
+                            }).then(p=>{
+                                if(p.ok)
+                                {
+                                    alert("Uspesno ste dodali sali film!");
+                                    dugmeB.disabled=false;
+                                    document.location.reload();
+                                }
+                                else
+                                {
+                                    
+                                    alert("Nastala je greska prilikom dodavanja filma sali!");
+                                    dugmeB.disabled=false;
+                                    document.location.reload();
+                                }
+                            });
+                        }
+                    
+                    }
+                }
+           
                 
                 
             }
